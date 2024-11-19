@@ -1,7 +1,7 @@
 import { useServices } from "@/hooks/useServices";
-import { AreaChartMultiple, BarChartMultiple, CardAssistsCtoGrande, CardAssistsGlobal, CardAssistsHuanta, CardOfferingGlobal } from "../Dashboard";
+import { AreaChartMultiple, BarChartMultiple, CardAssistsCtoGrande, CardAssistsGlobal, CardAssistsHuanta, CardOfferingGlobal } from "../Private/Dashboard";
 
-export function Home() {
+export default function Home() {
   const { data: services } = useServices();
 
   return (

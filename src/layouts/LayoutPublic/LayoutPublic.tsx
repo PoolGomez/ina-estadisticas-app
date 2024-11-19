@@ -5,7 +5,7 @@ interface PublicLayoutProps {
     children: React.ReactNode;
   }
 
-export function LayoutPublic(props: PublicLayoutProps) {
+export default function LayoutPublic(props: PublicLayoutProps) {
     const {children} = props
   return (
     <>

@@ -4,4 +4,4 @@ export * from './CardAssistsCtoGrande';
 export * from './CardAssistsGlobal';
 export * from './CardAssistsHuanta';
 export * from './CardOfferingGlobal';
-export * from './Dashboard';
+export { default as Dashboard } from './Dashboard';

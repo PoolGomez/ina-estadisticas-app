@@ -2,7 +2,7 @@ import { HeaderPrivate } from "@/components/HeaderPrivate";
 interface PrivateLayoutProps {
     children: React.ReactNode;
   }
-export function LayoutPrivate(props:PrivateLayoutProps) {
+export default function LayoutPrivate(props:PrivateLayoutProps) {
     const {children} = props;
   return (
 <>

@@ -7,20 +7,35 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { LoaderCircle } from "lucide-react"
-import { useLogin } from "@/hooks/useAuth"
+// import { useLogin } from "@/hooks/useAuth"
 // import { useState } from "react"
+// import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { loginUser } from "@/services"
+import { createUser, resetUser, UserKey } from "@/redux/states/user"
+import { useEffect, useState, 
+  // useTransition 
+} from "react"
+import { clearLocalStorage } from "@/utilities"
 import { useNavigate } from "react-router-dom"
+import { PublicRoutes } from "@/models"
 
 export function FormLogin() {
 
-    // const [email, setEmail] = useState('');
-    // const [password, setPassword] = useState('');
-    const navigate = useNavigate();
-    const { mutate: login, isPending } = useLogin();
-
     
+    // const navigate = useNavigate();
+    // const { mutate: login, isPending } = useLogin();
 
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    // const[isPending, startTransition] = useTransition();
+    const[isPending, setIsPending] = useState(false);
 
+    useEffect(() => {
+      clearLocalStorage(UserKey);
+      dispatch(resetUser());
+      navigate(`/${PublicRoutes.LOGIN}`, { replace: true });
+    }, []);
 
     // 1. Define your form.
     const form = useForm<z.infer<typeof formSchemaLogin>>({
@@ -32,15 +47,30 @@ export function FormLogin() {
     })
 
     // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof formSchemaLogin>) {
+    async function onSubmit(values: z.infer<typeof formSchemaLogin>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
-        login({ email: values.email, password: values.password }, {
-          onSuccess: () => navigate('/dashboard'),
-          onError: (err) => console.error(err),
-        });
+        // login({ email: values.email, password: values.password }, {
+        //   onSuccess: () => navigate('/dashboard'),
+        //   onError: (err) => console.error(err),
+        // });
+        // startTransition( async () => {
+          try {
+            setIsPending(true)
+            const result = await loginUser( values.email, values.password )
+            dispatch(createUser(result));
+  
+          } catch (error) {
+            console.log(error)
+          }finally{
+            setIsPending(false);
+          }
+          
+        // })
+        
 
-        console.log(values)
+
+
     }
 
   return (

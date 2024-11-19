@@ -7,7 +7,7 @@ interface PublicRouteProps {
   children: React.ReactNode;
 }
 
-export const PublicRoute: React.FC<PublicRouteProps> = ({ children }) => {
+const PublicRoute: React.FC<PublicRouteProps> = ({ children }) => {
   const [user,isLoading] = useAuthState(auth);
 
   if (isLoading) return <p>Loading...</p>;
@@ -20,3 +20,5 @@ export const PublicRoute: React.FC<PublicRouteProps> = ({ children }) => {
 
   // return <>{children}</>;
 };
+
+export default PublicRoute;

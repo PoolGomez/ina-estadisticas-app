@@ -8,7 +8,7 @@ import { CardOfferingGlobal } from "./CardOfferingGlobal";
 import { CardAssistsHuanta } from "./CardAssistsHuanta";
 import { CardAssistsCtoGrande } from "./CardAssistsCtoGrande/CardAssistsCtoGrande";
 
-export function Dashboard() {
+export default function Dashboard() {
 
   // const { data: items, isLoading, error } = useItems();
   const { data: services } = useServices();
@@ -23,8 +23,9 @@ export function Dashboard() {
 
 
   return (
-    <div className="h-full p-4">
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 p-2">
+    <>
+     {/* <div className="w-screen p-4 mt-12 items-center justify-center"> */}
+      <div className="grid gap-4 grid-cols-2 lg:grid-cols-4 p-2">
                 <CardOfferingGlobal />
                 <CardAssistsGlobal />
 
@@ -36,7 +37,7 @@ export function Dashboard() {
                 
       </div>
 
-      <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2 p-2">
+      <div className="grid gap-4 grid-cols-1 lg:grid-cols-2 p-2">
         {services && (
           <BarChartMultiple data={services} />
         )}
@@ -45,7 +46,7 @@ export function Dashboard() {
         <AreaChartMultiple />
       </div>
               
-    </div>
-    
+     {/* </div> */}
+    </>
   )
 }
