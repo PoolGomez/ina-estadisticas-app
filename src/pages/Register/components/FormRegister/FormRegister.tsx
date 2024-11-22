@@ -1,7 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { formSchemaLogin } from "./FormLogin.form"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -11,7 +10,7 @@ import { LoaderCircle } from "lucide-react"
 // import { useState } from "react"
 // import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
-import { loginUser } from "@/services"
+import {registerUser } from "@/services"
 import { createUser, resetUser, UserKey } from "@/redux/states/user"
 import { useEffect, useState, 
   // useTransition 
@@ -19,8 +18,9 @@ import { useEffect, useState,
 import { clearLocalStorage } from "@/utilities"
 import { useNavigate } from "react-router-dom"
 import { AppRoutes } from "@/models"
+import { formSchemaRegister } from "./FormRegister.form"
 
-export function FormLogin() {
+export function FormRegister() {
 
     
     // const navigate = useNavigate();
@@ -34,20 +34,21 @@ export function FormLogin() {
     useEffect(() => {
       clearLocalStorage(UserKey);
       dispatch(resetUser());
-      // navigate(`/${AppRoutes.login}`, { replace: true });
+    //   navigate(`/${AppRoutes.login}`, { replace: true });
     }, []);
 
     // 1. Define your form.
-    const form = useForm<z.infer<typeof formSchemaLogin>>({
-        resolver: zodResolver(formSchemaLogin),
+    const form = useForm<z.infer<typeof formSchemaRegister>>({
+        resolver: zodResolver(formSchemaRegister),
         defaultValues: {
+            name: "",
             email: "",
             password:""
         },
     })
 
     // 2. Define a submit handler.
-    async function onSubmit(values: z.infer<typeof formSchemaLogin>) {
+    async function onSubmit(values: z.infer<typeof formSchemaRegister>) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
         // login({ email: values.email, password: values.password }, {
@@ -57,16 +58,18 @@ export function FormLogin() {
         // startTransition( async () => {
           try {
             setIsPending(true)
-            const result = await loginUser( values.email, values.password )
+            const result = await registerUser(values.name, values.email, values.password )
+            // alert(JSON.stringify(result))
             if(result.code === 'OK'){
-              dispatch(createUser(result.user));
-              navigate(AppRoutes.private.root, { replace: true });
+                dispatch(createUser(result.user));
+                navigate(AppRoutes.private.root, { replace: true });
             }else{
-              alert(result.message)
+                alert(result.message)
             }
             
   
           } catch (error) {
+            console.log("error onSubmit")
             console.log(error)
           }finally{
             setIsPending(false);
@@ -86,8 +89,8 @@ export function FormLogin() {
     // className={cn("w-[380px]", className)} {...props}
     >
       <CardHeader className="text-center">
-        <CardTitle>INICIAR SESIÓN</CardTitle>
-        <CardDescription>Ingrese sus credenciales para continuar.</CardDescription>
+        <CardTitle>REGISTRO</CardTitle>
+        <CardDescription>Registre sus datos para continuar.</CardDescription>
       </CardHeader>
 
 
@@ -99,10 +102,27 @@ export function FormLogin() {
 
         <FormField
           control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Nombre</FormLabel>
+              <FormControl>
+                <Input type="text" placeholder="Ingrese su nombre" {...field} />
+              </FormControl>
+              {/* <FormDescription>
+                This is your public display name.
+              </FormDescription> */}
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Correo electrónico</FormLabel>
+              <FormLabel>Email</FormLabel>
               <FormControl>
                 <Input type="email" placeholder="Ingrese su correo electrónico" {...field} />
               </FormControl>
@@ -167,7 +187,7 @@ export function FormLogin() {
           {isPending && (
             <LoaderCircle className="mr-2 h-4 w-4 animate-spin"/>
           )}
-          Entrar
+          Registrar
         </Button>
       </CardFooter>
 

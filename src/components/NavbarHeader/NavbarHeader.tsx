@@ -6,7 +6,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 export  function NavbarHeader({rol}:{rol:string}) {
     const navigate = useNavigate();
     const location = useLocation();
-    console.log("[rol]",rol)
     const isActive = (path: string) => location.pathname === path;
 
     const redirect = (path: string) => {

@@ -4,7 +4,7 @@ import { PrivateGuard } from "./guards/PrivateGuard"
 import { PrivateRouter } from "./pages/Private/PrivateRouter"
 import { RoutesWithNotFound } from "./utilities"
 import { AppRoutes } from "./models"
-import { Register } from "./pages/Register"
+import Register  from "./pages/Register/Register"
 import { HeaderPrivate } from "./components/HeaderPrivate"
 
 

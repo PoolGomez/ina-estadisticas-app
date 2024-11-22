@@ -6,11 +6,32 @@ import { AppRouter } from "./AppRouter";
 import { Suspense } from "react";
 import { Provider } from "react-redux";
 import store from "./redux/store";
+import {Grid} from 'react-loader-spinner'
 
 function AppHookContainer() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={
+        // <ProgressBar
+        // visible={true}
+        // height="80"
+        // width="80"
+        // // color="#4fa94d"
+        // ariaLabel="progress-bar-loading"
+        // wrapperStyle={{}}
+        // wrapperClass=""
+        // />
+        <Grid
+          visible={true}
+          height="80"
+          width="80"
+          color="black"
+          ariaLabel="grid-loading"
+          radius="12.5"
+          wrapperStyle={{}}
+          wrapperClass="grid-wrapper"
+        />
+      }>
         <Provider store={store}>
           <App>
             <AppRouter />

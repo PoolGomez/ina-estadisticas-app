@@ -3,7 +3,7 @@ import { clearLocalStorage, persistLocalStorage } from "@/utilities";
 import {createSlice} from "@reduxjs/toolkit"
 
 export const EmptyUserState : UserInfo = {
-    id: 0,
+    id: "",
     name: "",
     email: "",
     role: Roles.GUEST,

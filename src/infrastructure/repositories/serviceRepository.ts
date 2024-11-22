@@ -1,11 +1,33 @@
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../../config/firebase';
+// import { collection, getDocs } from 'firebase/firestore';
+// import { db } from '../../config/firebase';
 import { Service } from '@/domain/models/Service';
+import { checkNroBoleta, createService, deleteService, getServices, updateService } from '@/application/useCases/serviceUseCases';
 
-export const getServicesRepository = async (): Promise<Service[]> => {
-  const querySnapshot = await getDocs(collection(db, 'servicios'));
-  return querySnapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  })) as Service[];
-};
+// export const getServicesRepository = async (): Promise<Service[]> => {
+//   const querySnapshot = await getDocs(collection(db, 'servicios'));
+//   return querySnapshot.docs.map((doc) => ({
+//     id: doc.id,
+//     ...doc.data(),
+//   })) as Service[];
+// };
+
+export class ServiceRepository {
+
+  async create(service: Omit<Service, 'id'>): Promise<Service>{
+    return createService(service)
+  }
+
+  async findAll(): Promise<Service[]>{
+    return getServices();
+  }
+
+  async update(id: string, service: Partial<Omit<Service, 'id'>>) : Promise<void>{
+    return updateService(id, service)
+  }
+  async delete(id: string) : Promise<void>{
+    return deleteService(id);
+  }
+  async isBoletaUnique(boleta: string): Promise<boolean>{
+    return checkNroBoleta(boleta);
+  }
+}

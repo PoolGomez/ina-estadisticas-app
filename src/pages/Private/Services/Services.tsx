@@ -1,10 +1,14 @@
-import { useServices } from "@/hooks/useServices";
+import { useDeleteService, useServices } from "@/hooks/useServices";
 import { HeaderServices, ListServices } from "./components";
 
 export default function Services() {
-  const { data: services } = useServices();
+  const { data: services, isLoading } = useServices();
+  
+
+  if(isLoading) return <p>Loading services...</p>
+
   return (
-    <div className="bg-secondary h-full p-4">
+    <>
       <HeaderServices />
       {services && (
         <>
@@ -22,6 +26,6 @@ export default function Services() {
         </>
       )}
       
-    </div>
+    </>
   )
 }
