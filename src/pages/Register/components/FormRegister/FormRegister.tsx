@@ -19,6 +19,8 @@ import { clearLocalStorage } from "@/utilities"
 import { useNavigate } from "react-router-dom"
 import { AppRoutes } from "@/models"
 import { formSchemaRegister } from "./FormRegister.form"
+import { Link } from "react-router-dom"
+import { toast } from "@/hooks/use-toast"
 
 export function FormRegister() {
 
@@ -64,7 +66,9 @@ export function FormRegister() {
                 dispatch(createUser(result.user));
                 navigate(AppRoutes.private.root, { replace: true });
             }else{
-                alert(result.message)
+              toast({
+                description:"❌ " +  result.message
+              })
             }
             
   
@@ -182,13 +186,20 @@ export function FormRegister() {
           ))}
         </div> */}
       </CardContent>
-      <CardFooter>
+      <CardFooter className="flex flex-col gap-2">
         <Button type="submit" className="w-full" disabled={isPending}>
           {isPending && (
             <LoaderCircle className="mr-2 h-4 w-4 animate-spin"/>
           )}
           Registrar
         </Button>
+        <div className=" flex items-center space-x-4 rounded-md border p-4 w-full">
+          <div className="flex-1 space-y-1">
+            <p className="text-sm text-muted-foreground">
+              Si ya tiene una cuenta, <Link to={"/login"}><span className="text-sm text-black font-medium leading-none">Ingrese</span></Link>
+            </p>
+          </div>
+        </div>
       </CardFooter>
 
 

@@ -7,6 +7,7 @@ import { Suspense } from "react";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import {Grid} from 'react-loader-spinner'
+import { Toaster } from "./components/ui/toaster";
 
 function AppHookContainer() {
   return (
@@ -36,6 +37,7 @@ function AppHookContainer() {
           <App>
             <AppRouter />
           </App>
+          <Toaster />
           <ReactQueryDevtools />
         </Provider>
       </Suspense>

@@ -3,6 +3,7 @@ import { auth } from "@/services/firebaseConfig";
 import { FirebaseError } from "firebase/app";
 import { addUser, getUser } from "./user.service";
 import { UserInfo } from "@/models";
+import { FirebaseErrorTranslator } from "@/entities/firebaseErrors";
 
 export const registerUser = async (name: string, email: string, password: string) => {
   try {
@@ -28,7 +29,7 @@ export const registerUser = async (name: string, email: string, password: string
     console.log(error)
     return {
       code:"ERROR",
-      message: error.code,
+      message: FirebaseErrorTranslator.translate(error.code || 'unknown') ,
       user: null
     }
   }
@@ -57,13 +58,9 @@ export const loginUser = async (email: string, password: string) => {
   } catch (err : unknown) {
     // console.log("[result]", error.code);
     const error = err as FirebaseError;
-    console.log("[code]", error.code);
-    console.log("[message]", error.message);
-    console.log("[name]", error.name);
-    console.log("[customData]", error.customData);
     return {
       code:"ERROR",
-      message: error.code,
+      message: FirebaseErrorTranslator.translate(error.code || 'unknown') ,
       user: null
     }
   }

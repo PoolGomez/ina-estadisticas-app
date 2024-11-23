@@ -6,7 +6,7 @@ import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import {
   Card,
   CardContent,
-  CardDescription,
+  // CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -14,43 +14,81 @@ import {
 import {
   ChartConfig,
   ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-]
+import { Service } from "@/models/service.model"
+import { useEffect, useState } from "react"
+// const chartData = [
+//   { month: "January", desktop: 186, mobile: 80 },
+//   { month: "February", desktop: 305, mobile: 200 },
+//   { month: "March", desktop: 237, mobile: 120 },
+//   { month: "April", desktop: 73, mobile: 190 },
+//   { month: "May", desktop: 209, mobile: 130 },
+//   { month: "June", desktop: 214, mobile: 140 },
+// ]
 
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
+  huanta: {
+    label: "Huanta",
     color: "hsl(var(--chart-1))",
   },
-  mobile: {
-    label: "Mobile",
+  ctogrande: {
+    label: "Canto Grande",
     color: "hsl(var(--chart-2))",
   },
 } satisfies ChartConfig
 
-export function AreaChartMultiple() {
+type Total = {
+  mes: string;
+  huanta: number;
+  ctogrande: number;
+};
+
+export function AreaChartMultiple({data}:{data:Service[]}) {
+
+  const [dataChart, setDataChart] = useState<Total[]>()
+
+  const sumarTotales = (services: Service[]) : Total[] => {
+    const result = services.reduce((acc: Record<string, Total>, service)=>{
+
+      const { mes, congregacion, ofrenda} = service;
+
+      // Si el mes no existe en el acumulador, lo inicializamos.
+      if(!acc[mes]){
+        acc[mes] = {
+          mes, huanta: 0, ctogrande:0
+        };
+      }
+
+      // Acumulamos la asistencia segun la congregacion
+      if(congregacion === "Huanta"){
+        acc[mes].huanta += ofrenda;
+      }else if(congregacion === "Canto Grande"){
+        acc[mes].ctogrande += ofrenda;
+      }
+      return acc;
+    },{});
+    return Object.values(result)
+  }
+  useEffect(()=>{
+    setDataChart(sumarTotales(data))
+  },[])
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Area Chart - Axes</CardTitle>
-        <CardDescription>
+        <CardTitle>Ofrenda</CardTitle>
+        {/* <CardDescription>
           Showing total visitors for the last 6 months
-        </CardDescription>
+        </CardDescription> */}
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
           <AreaChart
             accessibilityLayer
-            data={chartData}
+            data={dataChart}
             margin={{
               left: -20,
               right: 12,
@@ -58,7 +96,7 @@ export function AreaChartMultiple() {
           >
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="month"
+              dataKey="mes"
               tickLine={false}
               axisLine={false}
               tickMargin={8}
@@ -72,35 +110,32 @@ export function AreaChartMultiple() {
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <Area
-              dataKey="mobile"
+              dataKey="huanta"
               type="natural"
-              fill="var(--color-mobile)"
+              fill="var(--color-huanta)"
               fillOpacity={0.4}
-              stroke="var(--color-mobile)"
+              stroke="var(--color-huanta)"
               stackId="a"
             />
             <Area
-              dataKey="desktop"
+              dataKey="ctogrande"
               type="natural"
-              fill="var(--color-desktop)"
+              fill="var(--color-ctogrande)"
               fillOpacity={0.4}
-              stroke="var(--color-desktop)"
+              stroke="var(--color-ctogrande)"
               stackId="a"
             />
+            <ChartLegend content={<ChartLegendContent />} />
           </AreaChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter>
-        <div className="flex w-full items-start gap-2 text-sm">
-          <div className="grid gap-2">
+      <CardFooter className="flex-col items-center gap-2 text-sm">
+          
             <div className="flex items-center gap-2 font-medium leading-none">
-              Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+              {/* Trending up by 5.2% this month <TrendingUp className="h-4 w-4" /> */}
+              Monto de ofrendas recolectadas en las reuniones de servicio <TrendingUp className="h-4 w-4" />
             </div>
-            <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              January - June 2024
-            </div>
-          </div>
-        </div>
+          
       </CardFooter>
     </Card>
   )

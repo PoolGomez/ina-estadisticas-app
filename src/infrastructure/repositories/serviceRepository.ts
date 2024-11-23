@@ -1,7 +1,7 @@
 // import { collection, getDocs } from 'firebase/firestore';
 // import { db } from '../../config/firebase';
 import { Service } from '@/domain/models/Service';
-import { checkNroBoleta, createService, deleteService, getServices, updateService } from '@/application/useCases/serviceUseCases';
+import { checkNroBoleta, createService, deleteService, getServiceById, getServices, updateService } from '@/application/useCases/serviceUseCases';
 
 // export const getServicesRepository = async (): Promise<Service[]> => {
 //   const querySnapshot = await getDocs(collection(db, 'servicios'));
@@ -19,6 +19,10 @@ export class ServiceRepository {
 
   async findAll(): Promise<Service[]>{
     return getServices();
+  }
+
+  async findById(id: string): Promise<Service | null>{
+    return getServiceById(id);
   }
 
   async update(id: string, service: Partial<Omit<Service, 'id'>>) : Promise<void>{

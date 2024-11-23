@@ -44,7 +44,12 @@ export function HeaderPrivate({ children }: Props) {
         <div className="relative lg:w-[300px]">
           {/* <Input placeholder='Search...' className='rounded-lg' />
         <Search strokeWidth={1} className='absolute top-2 right-2'/> */}
+        <div className="flex gap-2 items-center justify-start ml-4">
+
+          <img alt="logo" src="/logo.ico" width={32} height={32} />
           <Label>INA Estadisticas</Label>
+        </div>
+          
         </div>
 
         <div>

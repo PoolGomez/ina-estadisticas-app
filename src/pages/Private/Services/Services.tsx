@@ -1,4 +1,4 @@
-import { useDeleteService, useServices } from "@/hooks/useServices";
+import { useServices } from "@/hooks/useServices";
 import { HeaderServices, ListServices } from "./components";
 
 export default function Services() {

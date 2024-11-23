@@ -12,7 +12,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import { ArrowUpDown, MoreHorizontal, Pencil } from "lucide-react"
+import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 // import { Checkbox } from "@/components/ui/checkbox"
@@ -36,6 +36,7 @@ import {
 
 import { Service } from "@/domain/models/Service"
 import { DeleteService } from "./DeleteService"
+import { UpdateService } from "./UpdateService"
 
 
 const columns: ColumnDef<Service>[] = [
@@ -84,6 +85,7 @@ const columns: ColumnDef<Service>[] = [
     accessorKey: "congregacion",
     header: ({ column }) => {
       return (
+        <div className="flex items-center justify-center">
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
@@ -91,6 +93,7 @@ const columns: ColumnDef<Service>[] = [
           Congregación
           <ArrowUpDown />
         </Button>
+        </div>
       )
     },
     cell: ({ row }) => <div className="lowercase">{row.getValue("congregacion")}</div>,
@@ -126,7 +129,7 @@ const columns: ColumnDef<Service>[] = [
         currency: "USD",
       }).format(amount)
 
-      return <div className="text-right font-medium lg:mr-8">{formatted}</div>
+      return <div className="text-center font-medium lg:mr-8">{formatted}</div>
     },
   },
  
@@ -137,6 +140,9 @@ const columns: ColumnDef<Service>[] = [
       const service = row.original
 
       return (
+<div className="flex items-center justify-end gap-2">
+<UpdateService id={service.id} />
+<DeleteService id={service.id} />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
@@ -153,18 +159,20 @@ const columns: ColumnDef<Service>[] = [
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              {/* View customer */}
-              <div className="flex flex-grow items-center justify-between">
-              Editar <Pencil className="w-4 h-4"/>
-              </div>
+               View customer 
+             
+              
+              
               
             </DropdownMenuItem>
             <DropdownMenuItem>
-              {/* View payment details */}
-              <DeleteService id={service.id} />
+              View payment details 
+              
+              
             </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+           </DropdownMenuContent>
+         </DropdownMenu>
+         </div>
       )
     },
   },

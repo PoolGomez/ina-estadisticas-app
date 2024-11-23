@@ -45,4 +45,8 @@ en desarrollo...
 
 ![Imagen 1](public/preview/captura-01.png)
 
+![Imagen 2](public/preview/captura-02.png)
+
+![Imagen 3](public/preview/captura-03.png)
+
 

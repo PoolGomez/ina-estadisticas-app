@@ -23,7 +23,7 @@ export function HeaderServices() {
                 <DialogHeader>
                     <DialogTitle>Crear Servicio</DialogTitle>
                     <DialogDescription>
-                        Crea y configure su servicio
+                        Registre los datos de su reunión de servicio
                     </DialogDescription>
                 </DialogHeader>
 

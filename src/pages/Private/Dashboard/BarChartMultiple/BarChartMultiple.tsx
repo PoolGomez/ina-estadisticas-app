@@ -18,8 +18,8 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-import { Service } from "@/domain/models/Service"
 import { useEffect, useState } from "react"
+import { Service } from "@/models/service.model"
 // const chartData = [
 //   { month: "January", desktop: 186, mobile: 80 },
 //   { month: "February", desktop: 305, mobile: 200 },
@@ -166,13 +166,14 @@ export function BarChartMultiple(props: PropBarChartMultiple) {
           </BarChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
+      <CardFooter className="flex-col items-center gap-2 text-sm">
         <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+          {/* Trending up by 5.2% this month <TrendingUp className="h-4 w-4" /> */}
+          Cantidad de asistentes a las reuniones de servicio <TrendingUp className="h-4 w-4" />
         </div>
-        <div className="leading-none text-muted-foreground">
+        {/* <div className="leading-none text-muted-foreground">
           Showing total visitors for the last 6 months
-        </div>
+        </div> */}
       </CardFooter>
     </Card>
   )

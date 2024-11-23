@@ -22,6 +22,14 @@ export const useServices = () => {
   });
 };
 
+export const useServiceById = (id: string) => {
+  return useQuery({
+    queryKey:["services",id],
+    queryFn: ()=>serviceRepository.findById(id),
+      enabled: !!id
+  }); 
+}
+
 export const useCreateService = () => {
   const queryClient = useQueryClient();
 
@@ -40,6 +48,8 @@ export const useCreateService = () => {
   });
 };
 
+
+
 export const useUpdateService = () => {
   const queryClient = useQueryClient();
 
@@ -52,7 +62,9 @@ export const useUpdateService = () => {
       });
     },
     onError: (error)=>{
-      alert(error instanceof Error ? error.message : ' Error actualizando servicio')
+      console.log()
+      // alert(error instanceof Error ? error.message : ' Error actualizando servicio')
+      return error instanceof Error ? error.message : ' Error actualizando servicio'
     }
   });
 };
@@ -67,6 +79,10 @@ export const useDeleteService = () => {
         queryKey:["services"]
       });
     },
+    onError:(error)=>{
+      console.log("error hook:", error)
+      return error instanceof Error ? error.message : ' Error borrando servicio'
+    }
   });
 };
 
