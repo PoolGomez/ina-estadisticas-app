@@ -19,8 +19,9 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-import { Service } from "@/models/service.model"
+
 import { useEffect, useState } from "react"
+import { Service } from "@/models"
 // const chartData = [
 //   { month: "January", desktop: 186, mobile: 80 },
 //   { month: "February", desktop: 305, mobile: 200 },
@@ -47,7 +48,12 @@ type Total = {
   ctogrande: number;
 };
 
-export function AreaChartMultiple({data}:{data:Service[]}) {
+type PropAreaChartMultiple = {
+  data: Service[];
+}
+
+export function AreaChartMultiple(props:PropAreaChartMultiple) {
+  const {data} = props;
 
   const [dataChart, setDataChart] = useState<Total[]>()
 

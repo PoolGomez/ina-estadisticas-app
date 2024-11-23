@@ -6,6 +6,7 @@ import { lazy } from "react"
 
 const Dashboard = lazy(() => import("@/pages/Private/Dashboard/Dashboard"));
 const Services = lazy(()=>import("@/pages/Private/Services/Services"))
+const Users = lazy(()=>import("@/pages/Private/Users/Users"))
 
 export const PrivateRouter = () =>{
     
@@ -19,6 +20,7 @@ export const PrivateRouter = () =>{
 
             <Route element={<AdminGuard />}>
                 <Route path={AppRoutes.private.services} element={<Services />} />
+                <Route path={AppRoutes.private.users} element={<Users />} />
             </Route>
         </RoutesWithNotFound>
     )

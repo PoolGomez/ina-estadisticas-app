@@ -13,7 +13,7 @@ export const registerUser = async (name: string, email: string, password: string
       id: userCredentials.user.uid,
       name : name,
       email: email,
-      role : "user",
+      rol : "user",
     }
     await addUser(newUser as UserInfo)
 
@@ -50,7 +50,7 @@ export const loginUser = async (email: string, password: string) => {
         id: user.id,
         name: user.name, //'Paul', //result.user.displayName,
         email: user.email, //result.user.email,
-        role: user.role
+        rol: user.rol
       }
     };
     return response;

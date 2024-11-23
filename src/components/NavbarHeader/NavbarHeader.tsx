@@ -39,6 +39,18 @@ export  function NavbarHeader({rol}:{rol:string}) {
                 
             </div>
           )}
+
+          {rol==='admin' && (
+            <div
+                // href="/examples/dashboard"
+                onClick={()=>redirect(AppRoutes.private.root + AppRoutes.private.users)}
+                // onClick={ ()=> <Navigate to="/services" /> }
+                className={`text-sm font-medium transition-colors hover:text-primary cursor-pointer ${!isActive(AppRoutes.private.root + AppRoutes.private.users) && "text-muted-foreground"}`}
+            >
+                Usuarios
+                
+            </div>
+          )}
           
 
           {/* <div

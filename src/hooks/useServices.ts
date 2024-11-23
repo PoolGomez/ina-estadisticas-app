@@ -1,8 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 // import { Service } from '@/domain/models/Service';
 // import { getServices } from '@/application/useCases/getServices';
-import { ServiceRepository } from '@/infrastructure/repositories/serviceRepository';
+// import { ServiceRepository } from '@/infrastructure/repositories/serviceRepository';
 import { Service } from '@/models/service.model';
+import { createService, deleteService, getServiceById, getServices, updateService } from '@/services';
 
 // export const useServices = () => {
 //   return useQuery<Service[]>({
@@ -13,20 +14,23 @@ import { Service } from '@/models/service.model';
 // };
 
 
-const serviceRepository = new ServiceRepository();
+// const serviceRepository = new ServiceRepository();
+const queryKey = "services"
 
 export const useServices = () => {
   return useQuery({
-    queryKey:["services"],
-    queryFn: serviceRepository.findAll  
+    queryKey:[queryKey],
+    queryFn: getServices
+    // queryFn: serviceRepository.findAll
   });
 };
 
 export const useServiceById = (id: string) => {
   return useQuery({
-    queryKey:["services",id],
-    queryFn: ()=>serviceRepository.findById(id),
-      enabled: !!id
+    queryKey:[queryKey,id],
+    queryFn: ()=> getServiceById(id), enabled: !!id
+    // queryFn: ()=>serviceRepository.findById(id),
+    //   enabled: !!id
   }); 
 }
 
@@ -34,10 +38,11 @@ export const useCreateService = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (service: Omit<Service, 'id'>) => serviceRepository.create(service),
+    // mutationFn: (service: Omit<Service, 'id'>) => serviceRepository.create(service),
+    mutationFn: (service: Omit<Service, 'id'>) => createService(service),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey:["services"]
+        queryKey:[queryKey]
       });
     },
     onError: (error)=>{
@@ -55,10 +60,11 @@ export const useUpdateService = () => {
 
   return useMutation({
     mutationFn: ({ id, service }: { id: string; service: Partial<Omit<Service, 'id'>> }) =>
-      serviceRepository.update(id, service),
+      // serviceRepository.update(id, service),
+    updateService(id, service),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey:["services"]
+        queryKey:[queryKey]
       });
     },
     onError: (error)=>{
@@ -73,10 +79,11 @@ export const useDeleteService = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (id: string) => serviceRepository.delete(id),
+    // mutationFn: (id: string) => serviceRepository.delete(id),
+    mutationFn: (id: string) => deleteService(id),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey:["services"]
+        queryKey:[queryKey]
       });
     },
     onError:(error)=>{

@@ -1,9 +1,7 @@
 # INA Estadísticas App
 
-Este es un proyecto para la gestion de reuniones para una Iglesia.
+Este es un proyecto para la gestion de reuniones de servicio para una Iglesia.
 
-
-en desarrollo...
 
 ## Tecnologías
 <table align="center">
@@ -37,16 +35,37 @@ en desarrollo...
       <img src="https://vite.dev/logo.svg" alt="Vite" width="50" height="50"><br>
         Vite
       </a>
+    </td>
+    <td align="center">
+      <a href="https://ui.shadcn.com/">
+      <img src="https://avatars.githubusercontent.com/u/139895814?s=280&v=4" alt="Shadcnui" width="50" height="50" style="border-radius: 50%;"><br>
+        Shadcn/UI
+      </a>
     </td> 
+    <td align="center">
+      <a href="https://vercel.com/">
+      <img src="https://assets.vercel.com/image/upload/v1588805858/repositories/vercel/logo.png" alt="Chartjs" width="50" height="50" ><br>
+        Vercel
+      </a>
+    </td>
   </tr>
 </table>
 
 ## Capturas
 
+### Autentificación
+![Imagen 5](public/preview/captura-05.png)
+
+### Dashboard
 ![Imagen 1](public/preview/captura-01.png)
 
+### Servicios
 ![Imagen 2](public/preview/captura-02.png)
 
 ![Imagen 3](public/preview/captura-03.png)
 
+### Usuarios y roles
+![Imagen 4](public/preview/captura-04.png)
+
+![Imagen 6](public/preview/captura-06.png)
 

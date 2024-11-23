@@ -20,11 +20,14 @@ export default function Home() {
 
       <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2 p-2">
         {services && (
+          <>
           <BarChartMultiple data={services} />
+          <AreaChartMultiple data={services} />
+          </>
         )}
         
 
-        <AreaChartMultiple />
+        
       </div>
     </div>
   )

@@ -1,25 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Pencil } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FormUpdateService } from "./FormUpdateService";
 
 export function UpdateService({id}:{id:string}) {
     const [openModalUpdate, setOpenModalUpdate] = useState(false)
     
-    // const [isId, setId] = useState("")
-
-    
-    
-    useEffect(()=>{
-        if(openModalUpdate === true){
-            // console.log("llamanda API")
-            // obtener()
-            // setId(id)
-        }
-
-    },[openModalUpdate])
-
   return (
     <Dialog 
               open={openModalUpdate} onOpenChange={setOpenModalUpdate}

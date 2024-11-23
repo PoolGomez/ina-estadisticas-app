@@ -6,6 +6,6 @@ export const AdminGuard= () => {
     // const isAdmin = true;
     const userState = useSelector((store: AppStore) => store.user);
 
-    return userState.role === 'admin' ? <Outlet /> : <Navigate to="/" />
-    // return userState.role === 'admin' ? <Outlet /> : <Navigate to="/private/dashboard" replace />
+    return userState.rol === 'admin' ? <Outlet /> : <Navigate to="/" />
+    // return userState.rol === 'admin' ? <Outlet /> : <Navigate to="/private/dashboard" replace />
 }

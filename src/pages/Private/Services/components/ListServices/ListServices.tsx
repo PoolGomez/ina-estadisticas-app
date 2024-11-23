@@ -34,9 +34,10 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-import { Service } from "@/domain/models/Service"
+
 import { DeleteService } from "./DeleteService"
 import { UpdateService } from "./UpdateService"
+import { Service } from "@/models"
 
 
 const columns: ColumnDef<Service>[] = [

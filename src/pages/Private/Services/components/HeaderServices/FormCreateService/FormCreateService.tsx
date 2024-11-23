@@ -34,6 +34,7 @@ import {
 } from "@/components/ui/select";
 import { congregaciones, oficiantes } from "@/data";
 import { useCreateService } from "@/hooks/useServices";
+import { createServiceAdapter } from "@/adapters/service.adapter";
 
 type FormCreateServiceProps ={
     // open: boolean;
@@ -82,7 +83,7 @@ export function FormCreateService(props: FormCreateServiceProps) {
         observacion: values.observacion,
       };
       // const result = await addService(newService);
-      createService(newService,{
+      createService(createServiceAdapter(newService),{
         onSuccess: ()=>{
           setOpen(false);
         }

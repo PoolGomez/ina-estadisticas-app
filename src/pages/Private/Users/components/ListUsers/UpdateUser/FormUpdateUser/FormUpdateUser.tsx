@@ -1,0 +1,132 @@
+import { useUpdateRolUser, useUserById } from "@/hooks/useUsers";
+import { Dispatch, SetStateAction, useEffect } from "react"
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { formSchemaUpdateRolUser } from "./FormUpdateUser.form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { LoaderCircle } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { roles } from "@/data";
+import { toast } from "@/hooks/use-toast";
+
+type FormUpdateUserProps = {
+    id: string,
+    setOpen: Dispatch<SetStateAction<boolean>>
+}
+
+export function FormUpdateUser(props: FormUpdateUserProps) {
+    const { id, setOpen} = props;
+
+    const {data: user, isPending: loadingUser, error: errorUser} = useUserById(id);
+    const {mutate: updateRolUser, isPending: loadingUpdate, error: errorUpdate} = useUpdateRolUser();
+
+    const form = useForm<z.infer<typeof formSchemaUpdateRolUser>>({
+        resolver: zodResolver(formSchemaUpdateRolUser),
+        defaultValues:{
+            rol: ""
+        }
+    })
+
+    useEffect(()=>{
+        if(user){
+            form.reset({
+                rol: user.rol,
+            })
+        }
+
+    },[user, form])
+
+    async function onSubmit(values: z.infer<typeof formSchemaUpdateRolUser>){
+        try {
+            updateRolUser({id: id, rol: values.rol},{
+                onSuccess:()=>{
+                    setOpen(false);
+                    toast({
+                        description:"✅ Rol de usuario actualizado correctamente"
+                      })
+                },
+                onError:(error)=>{
+                    console.log(error)
+                    toast({
+                        description:"❌ Ocurrio un error, intentelo de nuevo"
+                      })
+                },
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    if(loadingUser) return <p>Loading user...</p>;
+    if (errorUser) return <p>Error loading user.</p>;
+
+  return (
+    <Form {...form}>
+    <form 
+        onSubmit={form.handleSubmit(onSubmit)} 
+        className="space-y-2">
+      <FormField
+        // control={form.control}
+        name="email"
+        render={() => (
+          <FormItem>
+            <FormLabel>Email</FormLabel>
+            <FormControl>
+              <Input
+                type="text"
+                placeholder="cargando..."
+                value={user.email}
+                readOnly
+                disabled
+                // {...field}
+              />
+            </FormControl>
+            <FormMessage />
+            <FormDescription>
+            {errorUpdate && <label style={{ color: 'red' }}>{errorUpdate.message}</label>} {/* Muestra el mensaje de error aquí */}
+            </FormDescription>
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name="rol"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Rol</FormLabel>
+            <Select onValueChange={field.onChange} defaultValue={user?.rol}>
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Seleccione Rol" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                {roles.map((rol) => (
+                  <SelectItem
+                    key={rol.key}
+                    value={rol.key}
+                  >
+                    {rol.value}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+
+
+      <Button type="submit" className="w-full" disabled={loadingUpdate}>
+        {loadingUpdate && <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />}
+        Actualizar
+      </Button>
+    </form>
+  </Form>
+  )
+}

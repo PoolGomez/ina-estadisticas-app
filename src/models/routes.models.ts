@@ -4,7 +4,7 @@ export const AppRoutes = {
     private: {
         root: '/private',
         dashboard: '/dashboard',
-        user: '/users',             //admin
+        users: '/users',             //admin
         services: '/services',       //admin
         // categories: '/categories',  //admin
         // products: '/products',      //admin

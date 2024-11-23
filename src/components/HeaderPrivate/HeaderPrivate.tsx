@@ -53,7 +53,7 @@ export function HeaderPrivate({ children }: Props) {
         </div>
 
         <div>
-          <NavbarHeader rol={userState.role} />
+          <NavbarHeader rol={userState.rol} />
         </div>
 
         <div className="flex gap-x-2 items-center">
