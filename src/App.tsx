@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import "./App.css";
-// import { HeaderPrivate } from "./components/HeaderPrivate";
 
 interface Props {
   children: ReactNode
@@ -15,8 +14,6 @@ function App({children} : Props) {
     >
     {children}
     </div>
-    
-    <p>Footer</p>
     </>
   );
 }
