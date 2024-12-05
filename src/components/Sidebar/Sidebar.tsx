@@ -19,7 +19,7 @@ export default function Sidebar({ rol }: { rol: string }) {
   return (
     <Sheet>
       <SheetTrigger>
-        <Menu className="ml-0"/>
+        <Menu className="ml-0" fontVariant="outline"/>
       </SheetTrigger>
       <SheetContent side="left">
         <SheetHeader>

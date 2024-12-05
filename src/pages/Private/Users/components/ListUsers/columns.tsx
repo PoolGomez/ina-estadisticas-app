@@ -11,7 +11,7 @@ export const columns: ColumnDef<UserInfo>[] = [
       return (
         <div className="flex items-center justify-center">
           <Button
-            variant="ghost"
+            variant="outline"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Email
@@ -30,7 +30,7 @@ export const columns: ColumnDef<UserInfo>[] = [
       return (
         <div className="flex items-center justify-center">
           <Button
-            variant="ghost"
+            variant="outline"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Nombre
@@ -46,7 +46,7 @@ export const columns: ColumnDef<UserInfo>[] = [
     header: ({ column }) => (
       <div className="flex items-center justify-center">
         <Button
-          variant="ghost"
+          variant="outline"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Rol

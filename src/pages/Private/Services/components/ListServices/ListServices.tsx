@@ -71,7 +71,7 @@ const columns: ColumnDef<Service>[] = [
       return (
         <div className="flex items-center justify-center">
         <Button
-          variant="link"
+          variant="outline"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Boleta
@@ -88,7 +88,7 @@ const columns: ColumnDef<Service>[] = [
       return (
         <div className="flex items-center justify-center">
         <Button
-          variant="ghost"
+          variant="outline"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Congregación
@@ -115,7 +115,7 @@ const columns: ColumnDef<Service>[] = [
   {
     accessorKey: "ofrenda",
     header: ({column}) => <div className="flex items-center justify-center">
-    <Button variant="secondary" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+    <Button variant="outline" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
                             Ofrenda
                             <ArrowUpDown />
                         </Button>
