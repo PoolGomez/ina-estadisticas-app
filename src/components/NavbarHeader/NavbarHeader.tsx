@@ -21,7 +21,7 @@ export  function NavbarHeader({rol}:{rol:string}) {
             // href="/examples/dashboard"
             // onClick={ ()=> <Navigate to="/dashboard" /> }
             onClick={()=>redirect(AppRoutes.private.root + AppRoutes.private.dashboard)}
-            className={`text-sm font-medium transition-colors hover:text-primary cursor-pointer ${!isActive(AppRoutes.private.root + AppRoutes.private.dashboard) && "text-muted-foreground"}`}
+            className={`text-sm font-medium transition-colors hover:text-primary cursor-pointer ${isActive(AppRoutes.private.root + AppRoutes.private.dashboard) ? "text-blue-400" : "text-secondary-foreground"}`}
           >
             Dashboard
             
@@ -33,7 +33,7 @@ export  function NavbarHeader({rol}:{rol:string}) {
                 // href="/examples/dashboard"
                 onClick={()=>redirect(AppRoutes.private.root + AppRoutes.private.services)}
                 // onClick={ ()=> <Navigate to="/services" /> }
-                className={`text-sm font-medium transition-colors hover:text-primary cursor-pointer ${!isActive(AppRoutes.private.root + AppRoutes.private.services) && "text-muted-foreground"}`}
+                className={`text-sm font-medium transition-colors hover:text-primary cursor-pointer ${isActive(AppRoutes.private.root + AppRoutes.private.services) ? "text-blue-400" : "text-secondary-foreground"}`}
             >
                 Servicios
                 
@@ -45,7 +45,7 @@ export  function NavbarHeader({rol}:{rol:string}) {
                 // href="/examples/dashboard"
                 onClick={()=>redirect(AppRoutes.private.root + AppRoutes.private.users)}
                 // onClick={ ()=> <Navigate to="/services" /> }
-                className={`text-sm font-medium transition-colors hover:text-primary cursor-pointer ${!isActive(AppRoutes.private.root + AppRoutes.private.users) && "text-muted-foreground"}`}
+                className={`text-sm font-medium transition-colors hover:text-primary cursor-pointer ${isActive(AppRoutes.private.root + AppRoutes.private.users) ? "text-blue-400" : "text-secondary-foreground"}`}
             >
                 Usuarios
                 

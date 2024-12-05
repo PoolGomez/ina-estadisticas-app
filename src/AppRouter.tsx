@@ -6,28 +6,31 @@ import { RoutesWithNotFound } from "./utilities"
 import { AppRoutes } from "./models"
 import Register  from "./pages/Register/Register"
 import { HeaderPrivate } from "./components/HeaderPrivate"
+import { ThemeProvider } from "./components/theme-provider"
 
 
 export const AppRouter = () =>{
 
     return(
         <Router>
-            <HeaderPrivate>
-            <RoutesWithNotFound>
-                <Route path="/" element={ <Navigate to={AppRoutes.private.root} /> } />
-                <Route path={AppRoutes.login} element={ <Login /> } />
-                <Route path={AppRoutes.register} element={ <Register /> } />
-                <Route element={<PrivateGuard />}>
+            <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+                <HeaderPrivate>
+                <RoutesWithNotFound>
+                    <Route path="/" element={ <Navigate to={AppRoutes.private.root} /> } />
+                    <Route path={AppRoutes.login} element={ <Login /> } />
+                    <Route path={AppRoutes.register} element={ <Register /> } />
+                    <Route element={<PrivateGuard />}>
 
-                    {/* <Route element={<AdminGuard />}>
-                        <Route path="/private/products" element={<Products />} />
-                    </Route> */}
-                    <Route path={`${AppRoutes.private.root}/*`} element={ <PrivateRouter /> } />
-                    
-                </Route>
+                        {/* <Route element={<AdminGuard />}>
+                            <Route path="/private/products" element={<Products />} />
+                        </Route> */}
+                        <Route path={`${AppRoutes.private.root}/*`} element={ <PrivateRouter /> } />
+                        
+                    </Route>
 
-            </RoutesWithNotFound>
-            </HeaderPrivate>
+                </RoutesWithNotFound>
+                </HeaderPrivate>
+            </ThemeProvider>
         </Router>
     )
 }

@@ -186,7 +186,7 @@ export function FormLogin() {
         <div className=" flex items-center space-x-4 rounded-md border p-4 w-full">
           <div className="flex-1 space-y-1">
             <p className="text-sm text-muted-foreground">
-              Si no tiene una cuenta, <Link to={"/register"}><span className="text-sm text-black font-medium leading-none">Registrese</span></Link>
+              Si no tiene una cuenta, <Link to={"/register"}><span className="text-sm text-secondary-foreground font-medium leading-none ">Registrese</span></Link>
             </p>
           </div>
         </div>

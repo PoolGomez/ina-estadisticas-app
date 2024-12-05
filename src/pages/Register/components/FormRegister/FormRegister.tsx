@@ -199,7 +199,7 @@ export function FormRegister() {
         <div className=" flex items-center space-x-4 rounded-md border p-4 w-full">
           <div className="flex-1 space-y-1">
             <p className="text-sm text-muted-foreground">
-              Si ya tiene una cuenta, <Link to={"/login"}><span className="text-sm text-black font-medium leading-none">Ingrese</span></Link>
+              Si ya tiene una cuenta, <Link to={"/login"}><span className="text-sm text-secondary-foreground font-medium leading-none">Ingrese</span></Link>
             </p>
           </div>
         </div>

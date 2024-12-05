@@ -19,12 +19,16 @@ import { useNavigate } from "react-router-dom";
 import { ReactNode } from "react";
 import { Sidebar } from "../Sidebar";
 import { LogoName } from "../LogoName";
+import ModeToggle from "../ModeToggle/ModeToggle";
 
 interface Props {
   children: ReactNode;
 }
 
 export function HeaderPrivate({ children }: Props) {
+
+  
+
   const infoState = useSelector((store: AppStore) => store.info);
 
   const navigate = useNavigate();
@@ -42,7 +46,7 @@ export function HeaderPrivate({ children }: Props) {
   return (
     // bg-background
     <div className="flex flex-col h-screen w-full">
-      <header className="fixed flex flex-grow top-0 left-0 w-full z-50 items-center justify-between p-2 bg-white border-b h-12">
+      <header className="fixed flex flex-grow top-0 left-0 w-full z-50 items-center justify-between p-2 bg-primary-foreground border-b h-12">
         
         <div className="relative lg:w-[300px]">
           {/* <Input placeholder='Search...' className='rounded-lg' />
@@ -69,6 +73,10 @@ export function HeaderPrivate({ children }: Props) {
         </div>
 
         <div className="flex gap-x-2 items-center">
+
+        <ModeToggle />
+
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Avatar className="cursor-pointer">
