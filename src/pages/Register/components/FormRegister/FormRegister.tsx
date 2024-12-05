@@ -62,9 +62,12 @@ export function FormRegister() {
             setIsPending(true)
             const result = await registerUser(values.name, values.email, values.password )
             // alert(JSON.stringify(result))
-            if(result.code === 'OK'){
+            if(result.code === 'success'){
                 dispatch(createUser(result.user));
                 navigate(AppRoutes.private.root, { replace: true });
+                toast({
+                  description:"✅ " +  result.message
+                })
             }else{
               toast({
                 description:"❌ " +  result.message

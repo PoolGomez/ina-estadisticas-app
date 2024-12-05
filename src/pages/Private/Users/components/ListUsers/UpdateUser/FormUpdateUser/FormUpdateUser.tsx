@@ -19,7 +19,7 @@ type FormUpdateUserProps = {
 
 export function FormUpdateUser(props: FormUpdateUserProps) {
     const { id, setOpen} = props;
-
+    // const {rolDetault , setRolDefault} = useState("");
     const {data: user, isPending: loadingUser, error: errorUser} = useUserById(id);
     const {mutate: updateRolUser, isPending: loadingUpdate, error: errorUpdate} = useUpdateRolUser();
 
@@ -32,6 +32,7 @@ export function FormUpdateUser(props: FormUpdateUserProps) {
 
     useEffect(()=>{
         if(user){
+            // setRolDefault(user.rol as string);
             form.reset({
                 rol: user.rol,
             })
@@ -42,11 +43,18 @@ export function FormUpdateUser(props: FormUpdateUserProps) {
     async function onSubmit(values: z.infer<typeof formSchemaUpdateRolUser>){
         try {
             updateRolUser({id: id, rol: values.rol},{
-                onSuccess:()=>{
+                onSuccess:(result)=>{
                     setOpen(false);
-                    toast({
+                    if(result.code === "success"){
+                      toast({
                         description:"✅ Rol de usuario actualizado correctamente"
                       })
+                    }else{
+                      toast({
+                        description:"❌ " + result.message
+                      })
+                    }
+                    
                 },
                 onError:(error)=>{
                     console.log(error)
@@ -120,9 +128,7 @@ export function FormUpdateUser(props: FormUpdateUserProps) {
         )}
       />
 
-
-
-      <Button type="submit" className="w-full" disabled={loadingUpdate}>
+      <Button type="submit" className="w-full" disabled={loadingUpdate || user.rol === form.getValues().rol}>
         {loadingUpdate && <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />}
         Actualizar
       </Button>

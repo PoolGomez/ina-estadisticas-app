@@ -17,10 +17,10 @@ import { createService, deleteService, getServiceById, getServices, updateServic
 // const serviceRepository = new ServiceRepository();
 const queryKey = "services"
 
-export const useServices = () => {
+export const useServices =  () => {
   return useQuery({
     queryKey:[queryKey],
-    queryFn: getServices
+    queryFn: getServices,
     // queryFn: serviceRepository.findAll
   });
 };

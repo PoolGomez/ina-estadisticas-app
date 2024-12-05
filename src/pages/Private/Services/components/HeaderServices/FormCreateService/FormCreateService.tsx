@@ -35,6 +35,7 @@ import {
 import { congregaciones, oficiantes } from "@/data";
 import { useCreateService } from "@/hooks/useServices";
 import { createServiceAdapter } from "@/adapters/service.adapter";
+import { toast } from "@/hooks/use-toast";
 
 type FormCreateServiceProps ={
     // open: boolean;
@@ -84,8 +85,11 @@ export function FormCreateService(props: FormCreateServiceProps) {
       };
       // const result = await addService(newService);
       createService(createServiceAdapter(newService),{
-        onSuccess: ()=>{
+        onSuccess: (data)=>{
           setOpen(false);
+          toast({
+            description: "✅" + data.message
+          })
         }
       })
       

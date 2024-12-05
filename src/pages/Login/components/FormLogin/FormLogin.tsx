@@ -12,7 +12,7 @@ import { LoaderCircle } from "lucide-react"
 // import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { loginUser } from "@/services"
-import { createUser, resetUser, UserKey } from "@/redux/states/user"
+// import { createUser, resetUser, UserKey } from "@/redux/states/user"
 import { useEffect, useState, 
   // useTransition 
 } from "react"
@@ -21,6 +21,8 @@ import { useNavigate } from "react-router-dom"
 import { AppRoutes } from "@/models"
 import { Link } from "react-router-dom"
 import { toast } from "@/hooks/use-toast"
+import { createToken, resetToken, TokenKey } from "@/redux/states/token"
+import { createInfo, InfoKey, resetInfo } from "@/redux/states/info"
 
 export function FormLogin() {
 
@@ -34,8 +36,12 @@ export function FormLogin() {
     const[isPending, setIsPending] = useState(false);
 
     useEffect(() => {
-      clearLocalStorage(UserKey);
-      dispatch(resetUser());
+      // clearLocalStorage(UserKey);
+      // dispatch(resetUser());
+      clearLocalStorage(TokenKey);
+      clearLocalStorage(InfoKey);
+      dispatch(resetToken());
+      dispatch(resetInfo());
       // navigate(`/${AppRoutes.login}`, { replace: true });
     }, []);
 
@@ -61,7 +67,9 @@ export function FormLogin() {
             setIsPending(true)
             const result = await loginUser( values.email, values.password )
             if(result.code === 'OK'){
-              dispatch(createUser(result.user));
+              // dispatch(createUser(result.data));
+              dispatch(createInfo(result.data?.info));
+              dispatch(createToken(result.data?.token));
               navigate(AppRoutes.private.root, { replace: true });
             }else{
               toast({

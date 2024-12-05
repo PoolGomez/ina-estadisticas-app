@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { useServiceById, useUpdateService } from "@/hooks/useServices";
 import { cn } from "@/lib/utils";
-import { format } from "date-fns";
+import { format, parse } from "date-fns";
 import { CalendarIcon, LoaderCircle } from "lucide-react";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -49,7 +49,8 @@ export function FormUpdateService(props: FormUpdateServiceProps) {
             form.reset({
                 boleta: service.boleta,
                 congregacion: service.congregacion,
-                fecha: new Date(),
+                // fecha:  parse(service.fecha, 'dd-MM-yyyy', new Date()),
+                fecha:  parse(service.fecha, 'dd-MM-yyyy', new Date()),
                 mes: service.mes,
                 escuelaDominical: service.escuelaDominical,
                 invitados: service.invitados,
@@ -71,7 +72,7 @@ export function FormUpdateService(props: FormUpdateServiceProps) {
             // id: "",
             boleta: values.boleta,
             congregacion: values.congregacion,
-            fecha: format(values.fecha, "dd-MM-yyyy"),
+            fecha: format(values.fecha, 'dd-MM-yyyy'),
             mes: new Intl.DateTimeFormat("es-ES", { month: "long" }).format(
               values.fecha
             ),
@@ -199,7 +200,6 @@ export function FormUpdateService(props: FormUpdateServiceProps) {
                     )}
                   >
                     {field.value ? (
-                      // format(field.value, "PPP")
                       format(field.value, "dd-MM-yyyy")
                     ) : (
                       <span>dd-mm-aaaa</span>
@@ -211,8 +211,19 @@ export function FormUpdateService(props: FormUpdateServiceProps) {
               <PopoverContent className="w-auto p-0" align="start">
                 <Calendar
                   mode="single"
-                  selected={field.value}
-                  onSelect={field.onChange}
+                  // selected={ field.value ? new Date(field.value) : parse(field.value, 'dd-MM-yyyy', new Date())}
+                  selected={ field.value
+                    // : parse(field.value, 'dd-MM-yyyy', new Date())
+                  }
+                  onSelect={
+                    field.onChange
+                    // (date) => {
+                    //   if (date) {
+                    //     field.onChange(format(date, "yyyy-MM-dd")); // Cambia el formato al que necesites
+                    //   }
+                    // }
+
+                  }
                   disabled={(date) =>
                     date > new Date() || date < new Date("1900-01-01")
                   }
@@ -220,9 +231,6 @@ export function FormUpdateService(props: FormUpdateServiceProps) {
                 />
               </PopoverContent>
             </Popover>
-            {/* <FormDescription>
-              Your date of birth is used to calculate your age.
-            </FormDescription> */}
             <FormMessage />
           </FormItem>
         )}

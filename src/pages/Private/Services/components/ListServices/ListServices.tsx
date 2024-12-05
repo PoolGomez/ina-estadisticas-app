@@ -71,7 +71,7 @@ const columns: ColumnDef<Service>[] = [
       return (
         <div className="flex items-center justify-center">
         <Button
-          variant="ghost"
+          variant="link"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Boleta
@@ -102,7 +102,7 @@ const columns: ColumnDef<Service>[] = [
   {
     accessorKey: "fecha",
     header: ({column}) => <div className="flex items-center justify-center">
-    <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+    <Button variant="outline" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
                             Fecha
                             <ArrowUpDown />
                         </Button>
@@ -115,7 +115,7 @@ const columns: ColumnDef<Service>[] = [
   {
     accessorKey: "ofrenda",
     header: ({column}) => <div className="flex items-center justify-center">
-    <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+    <Button variant="secondary" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
                             Ofrenda
                             <ArrowUpDown />
                         </Button>
@@ -153,12 +153,13 @@ const columns: ColumnDef<Service>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Acciones</DropdownMenuLabel>
+            <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(service.boleta)}
             >
               Copiar Nro Boleta
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
+            {/* <DropdownMenuSeparator />
             <DropdownMenuItem>
                View customer 
              
@@ -170,7 +171,7 @@ const columns: ColumnDef<Service>[] = [
               View payment details 
               
               
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
            </DropdownMenuContent>
          </DropdownMenu>
          </div>

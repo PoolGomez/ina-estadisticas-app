@@ -4,8 +4,8 @@ import { Navigate, Outlet } from "react-router-dom";
 
 export const AdminGuard= () => {
     // const isAdmin = true;
-    const userState = useSelector((store: AppStore) => store.user);
+    const infoState = useSelector((store: AppStore) => store.info);
 
-    return userState.rol === 'admin' ? <Outlet /> : <Navigate to="/" />
+    return infoState.rol === 'admin' ? <Outlet /> : <Navigate to="/" />
     // return userState.rol === 'admin' ? <Outlet /> : <Navigate to="/private/dashboard" replace />
 }
