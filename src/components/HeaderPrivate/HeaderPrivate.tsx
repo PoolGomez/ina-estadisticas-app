@@ -45,7 +45,7 @@ export function HeaderPrivate({ children }: Props) {
 
   return (
     // bg-background
-    <div className="flex flex-col h-screen w-full">
+    <div className="flex flex-col h-full w-full">
       <header className="fixed flex flex-grow top-0 left-0 w-full z-50 items-center justify-between p-2 bg-primary-foreground border-b h-12">
         
         <div className="relative lg:w-[300px]">
