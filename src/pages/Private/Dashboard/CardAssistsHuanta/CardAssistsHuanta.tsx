@@ -1,8 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useServices } from "@/hooks/useServices";
+import { Service } from "@/models";
 
-export function CardAssistsHuanta() {
-    const {data} = useServices();
+type PropCardAssistsHuanta = {
+  data: Service[] 
+}
+
+export function CardAssistsHuanta(props: PropCardAssistsHuanta) {
+    const {data} = props;
     const total = data?.reduce( (acc, service) =>  acc + (service.congregacion === "Huanta" ? service.asistencia : 0), 0 );
   return (
     <Card>

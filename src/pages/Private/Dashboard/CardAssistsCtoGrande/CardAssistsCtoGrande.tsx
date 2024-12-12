@@ -1,8 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useServices } from "@/hooks/useServices";
+import { Service } from "@/models";
 
-export function CardAssistsCtoGrande() {
-    const {data} = useServices();
+type PropCardAssistsCtoGrande = {
+  data: Service[] 
+}
+
+export function CardAssistsCtoGrande(props: PropCardAssistsCtoGrande) {
+    const {data} = props;
     const total = data?.reduce( (acc, service) =>  acc + (service.congregacion === "Canto Grande" ? service.asistencia : 0), 0 );
   return (
     <Card>

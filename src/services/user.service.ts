@@ -3,6 +3,12 @@ import {deleteDoc, doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebaseConfig";
 import { UserInfo } from "@/models";
 
+interface responseUser{
+  code: string;
+  message: string;
+  data: UserInfo[]
+}
+
 const usersCollection = "users";
 const api = import.meta.env.VITE_URL_BACKEND + "/api/v1/users/"
 
@@ -36,12 +42,12 @@ export const getUser = async (id: string): Promise<UserInfo> => {
 }
   
 
-export const getUsers = async ():Promise<UserInfo[]> => {
+export const getUsers = async ():Promise<responseUser> => {
   const result = await fetch( api, {
     method:"GET",
     credentials:"include"
   })
-  return await result.json() as UserInfo[];
+  return await result.json() as responseUser;
 
   // const snapshot = await getDocs(collection(db, usersCollection));
   // return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as UserInfo[];

@@ -1,10 +1,14 @@
 import { formatCurrency } from "@/lib/formatCurrency";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useServices } from "@/hooks/useServices";
+import { Service } from "@/models";
 
-export  function CardOfferingGlobal() {
+type PropCardOfferingGlobal = {
+  data: Service[] 
+}
 
-    const {data} = useServices();
+export  function CardOfferingGlobal(props: PropCardOfferingGlobal) {
+
+    const {data} = props;
     const total = data?.reduce( (acc, service) =>  acc + service.ofrenda, 0 );
 
   return (

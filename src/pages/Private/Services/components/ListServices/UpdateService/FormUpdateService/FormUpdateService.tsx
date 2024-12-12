@@ -16,6 +16,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { congregaciones, oficiantes } from "@/data";
 import { toast } from "@/hooks/use-toast";
+import { signOut } from "firebase/auth";
+import { auth } from "@/services";
+import { useNavigate } from "react-router-dom";
 
 type FormUpdateServiceProps = {
     id: string,
@@ -24,7 +27,20 @@ type FormUpdateServiceProps = {
 
 export function FormUpdateService(props: FormUpdateServiceProps) {
     const {id, setOpen} = props;
-    const {data: service, isPending: loadingService, error: errorService} = useServiceById(id);
+    const navigate = useNavigate();
+    const {data: response, isPending: loadingService, error: errorService} = useServiceById(id);
+
+    if(response?.code === 'error'){
+      try {
+        console.log("logout for token")
+        signOut(auth)
+      } catch (error) {
+        console.log(error)
+      }finally{
+        navigate("/login");
+      }
+      
+    }
 
     const {mutate: updateService, isPending: loadingUpdate, error: errorUpdate} = useUpdateService();
 
@@ -45,23 +61,38 @@ export function FormUpdateService(props: FormUpdateServiceProps) {
         },
     });
     useEffect(()=>{
-        if(service){
-            form.reset({
-                boleta: service.boleta,
-                congregacion: service.congregacion,
-                // fecha:  parse(service.fecha, 'dd-MM-yyyy', new Date()),
-                fecha:  parse(service.fecha, 'dd-MM-yyyy', new Date()),
-                mes: service.mes,
-                escuelaDominical: service.escuelaDominical,
-                invitados: service.invitados,
-                miembros: service.miembros,
-                asistencia: service.asistencia,
-                oficiante: service.oficiante,
-                ofrenda: service.ofrenda,
-                observacion: service.observacion,
-            });
+        if(response){
+
+          if(response?.code === "error"){
+            try {
+              console.log("logout for token")
+              signOut(auth)
+            } catch (error) {
+              console.log(error)
+            }finally{
+              navigate("/login");
+            }
+          }else{
+            console.log("response:",response)
+            const fecha= response?.data?.fecha;
+              form.reset({
+                  boleta: response?.data?.boleta,
+                  congregacion: response?.data?.congregacion,
+                  // fecha:  parse(service.fecha, 'dd-MM-yyyy', new Date()),
+                  fecha:  parse(fecha, 'dd-MM-yyyy', new Date()),
+                  mes: response?.data?.mes,
+                  escuelaDominical: response?.data?.escuelaDominical,
+                  invitados: response?.data?.invitados,
+                  miembros: response?.data?.miembros,
+                  asistencia: response?.data?.asistencia,
+                  oficiante: response?.data?.oficiante,
+                  ofrenda: response?.data?.ofrenda,
+                  observacion: response?.data?.observacion,
+              });
+          }
+          
         }
-    },[service,form])
+    },[response,form])
 
     async function onSubmit(values: z.infer<typeof formSchemaUpdateService>) {
 
@@ -161,7 +192,7 @@ export function FormUpdateService(props: FormUpdateServiceProps) {
         render={({ field }) => (
           <FormItem>
             <FormLabel>Congregación</FormLabel>
-            <Select onValueChange={field.onChange} defaultValue={service?.congregacion}>
+            <Select onValueChange={field.onChange} defaultValue={response?.data?.congregacion}>
               <FormControl>
                 <SelectTrigger>
                   <SelectValue placeholder="Seleccione Congregación" />
@@ -307,7 +338,7 @@ export function FormUpdateService(props: FormUpdateServiceProps) {
         render={({ field }) => (
           <FormItem>
             <FormLabel>Oficiante</FormLabel>
-            <Select onValueChange={field.onChange} defaultValue={service?.oficiante}>
+            <Select onValueChange={field.onChange} defaultValue={response?.data?.oficiante}>
               <FormControl>
                 <SelectTrigger>
                   <SelectValue placeholder="Seleccione Oficiante" />

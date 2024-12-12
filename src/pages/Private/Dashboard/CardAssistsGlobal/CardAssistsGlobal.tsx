@@ -1,8 +1,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useServices } from "@/hooks/useServices";
-
-export function CardAssistsGlobal() {
-    const {data} = useServices();
+import { Service } from "@/models";
+type PropCardAssistsGlobal = {
+  data: Service[] 
+}
+export function CardAssistsGlobal(props: PropCardAssistsGlobal) {
+    const {data} = props;
     const total = data?.reduce( (acc, service) =>  acc + service.asistencia, 0 );
   return (
     <Card>

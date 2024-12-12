@@ -121,8 +121,10 @@ export function BarChartMultiple(props: PropBarChartMultiple) {
   }
 
   useEffect(()=>{
-    setDataChart(sumarTotales(data))
-  },[])
+    if(data){
+      setDataChart(sumarTotales(data))
+    }
+  },[data])
 
 
   return (

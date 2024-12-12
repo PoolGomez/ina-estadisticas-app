@@ -80,8 +80,10 @@ export function AreaChartMultiple(props:PropAreaChartMultiple) {
     return Object.values(result)
   }
   useEffect(()=>{
-    setDataChart(sumarTotales(data))
-  },[])
+    if(data){
+      setDataChart(sumarTotales(data))
+    }
+  },[data])
   return (
     <Card>
       <CardHeader>

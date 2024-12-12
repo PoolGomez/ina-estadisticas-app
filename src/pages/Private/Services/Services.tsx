@@ -1,22 +1,36 @@
 import { useServices } from "@/hooks/useServices";
 import { HeaderServices, ListServices } from "./components";
+import { useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "@/services";
 
 export default function Services() {
   // const tokenState = useSelector((store: AppStore) => store.token);
-  const { data: services, isLoading } = useServices();
-  
+  const { data: response } = useServices();
+  const navigate = useNavigate();
 
-  if(isLoading) return <p>Loading services...</p>
+  if(response?.code === 'error'){
+    try {
+      signOut(auth)
+    } catch (error) {
+      console.log(error)
+    }finally{
+      navigate("/login");
+    }
+    
+  }
+
+  
 
   return (
     <>
       <HeaderServices />
-      {services && (
+      {response && (
         <>
         <div 
         // className="hidden lg:block"
         >
-        <ListServices services={services}/>
+        <ListServices services={response.data}/>
         </div>
         {/* <div className="lg:hidden">
           {services.map(()=>(

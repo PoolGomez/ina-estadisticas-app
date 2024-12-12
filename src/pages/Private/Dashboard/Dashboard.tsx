@@ -13,7 +13,7 @@ export default function Dashboard() {
 
   // const { data: items, isLoading, error } = useItems();
   // const tokenState = useSelector((store: AppStore) => store.token);
-  const { data: services } = useServices();
+  const { data: response } = useServices();
 
   // if (isLoading) return <p>Loading...</p>;
   // if (error) return <p>Error loading data</p>;
@@ -21,29 +21,27 @@ export default function Dashboard() {
   // const labels = items?.map((item) => item.name) || [];
   // const dataValues = items?.map((item) => item.value) || [];
     
-   
 
 
   return (
     <div>
      {/* <div className="w-screen p-4 mt-12 items-center justify-center"> */}
       <div className="grid gap-4 grid-cols-2 lg:grid-cols-4 p-2">
-                <CardOfferingGlobal />
-                <CardAssistsGlobal />
-
-                <CardAssistsHuanta />
-
-                <CardAssistsCtoGrande />
-
-                
-                
+        {response && (
+          <>
+          <CardOfferingGlobal data={response.data} />
+          <CardAssistsGlobal data={response.data} />
+          <CardAssistsHuanta data={response.data} />
+          <CardAssistsCtoGrande data={response.data} />
+          </>
+        )}
       </div>
 
       <div className="grid gap-4 grid-cols-1 lg:grid-cols-2 p-2">
-        {services && (
+        {response && (
           <>
-          <BarChartMultiple data={services} />
-          <AreaChartMultiple data={services}/>
+          <BarChartMultiple data={response.data} />
+          <AreaChartMultiple data={response.data}/>
           </>
         )}
         

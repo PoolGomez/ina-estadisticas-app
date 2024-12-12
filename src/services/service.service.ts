@@ -1,6 +1,17 @@
 import { Service } from "@/models/service.model";
 import { ResponseService } from "@/models/responseService.model";
 
+interface responseServices{
+  code: string;
+  message: string;
+  data: Service[]
+}
+interface responseService{
+  code: string;
+  message: string;
+  data: Service
+}
+
 
 // const api = "http://localhost:3100/api/v1/services/";
 const api = import.meta.env.VITE_URL_BACKEND + "/api/v1/services/"
@@ -78,7 +89,7 @@ export const updateService = async (
 //     return querySnapshot.empty;
 // }
 
-export const getServices = async (): Promise<Service[]> => {
+export const getServices = async (): Promise<responseServices> => {
   const result = await fetch(api, {
     method: "GET",
     credentials: "include",
@@ -86,7 +97,15 @@ export const getServices = async (): Promise<Service[]> => {
     //   'Authorization':`Bearer ${token}`
     // }
   });
-  return (await result.json()) as Service[];
+  // const res = await result.json();
+  // console.log(res)
+  // if(res.code === "error" && res.message === "No existe el token"){
+  //   await signOut(auth);
+  //   navigate("/login");
+  //   return []
+  // }
+  return (await result.json()) as responseServices;
+  // return (await result.json()) as Service[];
 
   // const querySnapshot = await getDocs(collection(db,servicesCollection));
   // return querySnapshot.docs.map((doc) => ({
@@ -95,12 +114,12 @@ export const getServices = async (): Promise<Service[]> => {
   // })) as Service[];
 };
 
-export const getServiceById = async (id: string): Promise<Service | null> => {
+export const getServiceById = async (id: string): Promise<responseService> => {
   const result = await fetch(api + id, {
     method: "GET",
     credentials: "include",
   });
-  return (await result.json()) as Service;
+  return (await result.json()) as responseService;
 
   // const docRef = doc(db, servicesCollection, id);
   // const docSnap = await getDoc(docRef);
