@@ -27,7 +27,7 @@ export default function Users() {
   }
 
   return (
-    <>
+    <div className="mt-12">
     <HeaderUsers />
     {response && (
       
@@ -37,6 +37,6 @@ export default function Users() {
         </div>
         </>
       )}
-    </>
+    </div>
   )
 }

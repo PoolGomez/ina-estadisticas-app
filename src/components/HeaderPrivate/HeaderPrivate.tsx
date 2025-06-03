@@ -20,6 +20,7 @@ import { ReactNode } from "react";
 import { Sidebar } from "../Sidebar";
 import { LogoName } from "../LogoName";
 import ModeToggle from "../ModeToggle/ModeToggle";
+import { Button } from "../ui/button";
 
 interface Props {
   children: ReactNode;
@@ -87,7 +88,7 @@ export function HeaderPrivate({ children }: Props) {
             <DropdownMenuContent align="start">
               <DropdownMenuLabel>
                 {/* My Account */}
-                {infoState.email ? infoState.email : "identificarse"}
+                {infoState.email ? infoState.email : <Button type="button" onClick={()=>navigate("/login")}>Identificiarse</Button>}
               </DropdownMenuLabel>
               {infoState.email && (
                 <>

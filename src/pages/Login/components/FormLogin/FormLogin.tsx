@@ -7,15 +7,9 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { LoaderCircle } from "lucide-react"
-// import { useLogin } from "@/hooks/useAuth"
-// import { useState } from "react"
-// import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { loginUser } from "@/services"
-// import { createUser, resetUser, UserKey } from "@/redux/states/user"
-import { useEffect, useState, 
-  // useTransition 
-} from "react"
+import { useEffect, useState} from "react"
 import { clearLocalStorage } from "@/utilities"
 import { useNavigate } from "react-router-dom"
 import { AppRoutes } from "@/models"
@@ -26,23 +20,15 @@ import { createInfo, InfoKey, resetInfo } from "@/redux/states/info"
 
 export function FormLogin() {
 
-    
-    // const navigate = useNavigate();
-    // const { mutate: login, isPending } = useLogin();
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    // const[isPending, startTransition] = useTransition();
     const[isPending, setIsPending] = useState(false);
 
     useEffect(() => {
-      // clearLocalStorage(UserKey);
-      // dispatch(resetUser());
       clearLocalStorage(TokenKey);
       clearLocalStorage(InfoKey);
       dispatch(resetToken());
       dispatch(resetInfo());
-      // navigate(`/${AppRoutes.login}`, { replace: true });
     }, []);
 
     // 1. Define your form.
@@ -53,42 +39,43 @@ export function FormLogin() {
             password:""
         },
     })
-
     // 2. Define a submit handler.
     async function onSubmit(values: z.infer<typeof formSchemaLogin>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        // login({ email: values.email, password: values.password }, {
-        //   onSuccess: () => navigate('/dashboard'),
-        //   onError: (err) => console.error(err),
-        // });
-        // startTransition( async () => {
+      
+      const id = setTimeout(() => {
+        toast({
+          variant:"destructive",
+          description: "La inactividad de esta aplicación puede causar retrasos en la carga de datos. La reactivación puede demorar de 50 segundos o más. Espere por favor."
+        });
+      }, 5000);
+
           try {
             setIsPending(true)
-            const result = await loginUser( values.email, values.password )
-            if(result.code === 'OK'){
-              // dispatch(createUser(result.data));
-              dispatch(createInfo(result.data?.info));
-              dispatch(createToken(result.data?.token));
-              navigate(AppRoutes.private.root, { replace: true });
-            }else{
-              toast({
-                description: "❌ " + result.message
-              })
-              
-            }
+
+            // setTimeout(async() => {
+            //   console.log("Esta función se ejecuta después de 10 segundos.");
+              const result = await loginUser( values.email, values.password )
             
-  
+              if(result.code === 'OK'){
+                dispatch(createInfo(result.data?.info));
+                dispatch(createToken(result.data?.token));
+                navigate(AppRoutes.private.root, { replace: true });
+              }else{
+                toast({
+                  description: "❌ " + result.message
+                })
+                
+              }
+
+            // }, 10000) ;
+            
+          
           } catch (error) {
             console.log(error)
           }finally{
-            setIsPending(false);
+            setIsPending(false)
+            clearTimeout(id);
           }
-          
-        // })
-        
-
-
 
     }
 

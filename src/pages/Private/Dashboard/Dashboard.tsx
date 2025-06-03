@@ -24,7 +24,7 @@ export default function Dashboard() {
 
 
   return (
-    <div>
+    <div className="mt-12">
      {/* <div className="w-screen p-4 mt-12 items-center justify-center"> */}
       <div className="grid gap-4 grid-cols-2 lg:grid-cols-4 p-2">
         {response && (

@@ -58,20 +58,11 @@ export const loginUser = async (email: string, password: string) => {
     const response = await fetch(api + '/login', {
       method: 'POST',
       credentials: 'include',
-      // headers:{
-      //   'Content-Type':'application/json',
-      // },
       headers:{
         'Authorization':`Bearer ${idToken}`
       }
-      // body: JSON.stringify({ token: idToken}),
-      
     })
-
     const data = await response.json();
-
-    // const user = await getUser(userCredential.user.uid);
-
     const result = {
       code:'OK',
       message: "Login correcto",
@@ -81,20 +72,8 @@ export const loginUser = async (email: string, password: string) => {
       }
     };
     return result;
-    // const response = {
-    //   code: "OK",
-    //   message: "Login Correcto",
-    //   user: {
-    //     id: user.id,
-    //     name: user.name, //'Paul', //result.user.displayName,
-    //     email: user.email, //result.user.email,
-    //     rol: user.rol
-    //   }
-    // };
-    // return response;
 
   } catch (err : unknown) {
-    
     const error = err as FirebaseError;
     return {
       code:"ERROR",

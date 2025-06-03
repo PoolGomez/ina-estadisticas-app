@@ -7,10 +7,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { LoaderCircle } from "lucide-react";
+import { AlertTriangle, LoaderCircle, PopcornIcon } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { roles } from "@/data";
 import { toast } from "@/hooks/use-toast";
+import { Alert, AlertTitle } from "@/components/ui/alert";
 
 type FormUpdateUserProps = {
     id: string,
@@ -127,6 +128,19 @@ export function FormUpdateUser(props: FormUpdateUserProps) {
           </FormItem>
         )}
       />
+
+      <div className="grid w-full max-w-xl items-start gap-4 justify-center">
+      <Alert >
+        <AlertTitle className="flex items-center justify-start">
+        <AlertTriangle className="w-4 h-4 mr-2" />Usuario (Por Defecto): Solo puede ver el Dashboard.
+        </AlertTitle>
+      </Alert>
+      <Alert >
+        <AlertTitle className="flex items-center justify-start">
+        <PopcornIcon className="w-4 h-4 mr-2" />Administrador: Puede ver todas la opciones.
+        </AlertTitle>
+      </Alert>
+      </div>
 
       <Button type="submit" className="w-full" disabled={loadingUpdate || user.rol === form.getValues().rol}>
         {loadingUpdate && <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />}

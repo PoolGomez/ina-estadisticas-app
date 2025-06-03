@@ -24,6 +24,7 @@ export default function Services() {
 
   return (
     <>
+    <div className="mt-12">
       <HeaderServices />
       {response && (
         <>
@@ -40,7 +41,7 @@ export default function Services() {
         </div> */}
         </>
       )}
-      
+      </div>
     </>
   )
 }
