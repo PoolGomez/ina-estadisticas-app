@@ -11,7 +11,7 @@ import { useDispatch } from "react-redux"
 import { loginUser } from "@/services"
 import { useEffect, useState} from "react"
 import { clearLocalStorage } from "@/utilities"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import { AppRoutes } from "@/models"
 import { Link } from "react-router-dom"
 import { toast } from "@/hooks/use-toast"
@@ -24,6 +24,16 @@ export function FormLogin() {
     const navigate = useNavigate();
     const[isPending, setIsPending] = useState(false);
 
+    const [params] = useSearchParams();
+    const email=params.get("email");
+    const password = params.get("password");
+    useEffect(()=>{
+      if(email && password){
+          handleLogin(email as string, password as string);
+      }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[email, password])
+
     useEffect(() => {
       clearLocalStorage(TokenKey);
       clearLocalStorage(InfoKey);
@@ -31,7 +41,6 @@ export function FormLogin() {
       dispatch(resetInfo());
     }, []);
 
-    // 1. Define your form.
     const form = useForm<z.infer<typeof formSchemaLogin>>({
         resolver: zodResolver(formSchemaLogin),
         defaultValues: {
@@ -39,45 +48,67 @@ export function FormLogin() {
             password:""
         },
     })
-    // 2. Define a submit handler.
     async function onSubmit(values: z.infer<typeof formSchemaLogin>) {
-      
+      handleLogin(values.email, values.password);
+    }
+    async function handleLogin(emailLogin: string, passwordLogin:string) {
       const id = setTimeout(() => {
         toast({
-          variant:"destructive",
-          description: "La inactividad de esta aplicación puede causar retrasos en la carga de datos. La reactivación puede demorar de 50 segundos o más. Espere por favor."
+          variant: "destructive",
+          description:
+            "La inactividad de esta aplicación puede causar retrasos en la carga de datos. La reactivación puede demorar de 50 segundos o más. Espere por favor.",
         });
       }, 5000);
 
-          try {
-            setIsPending(true)
+      try {
+        setIsPending(true);
+        const result = await loginUser(emailLogin, passwordLogin);
 
-            // setTimeout(async() => {
-            //   console.log("Esta función se ejecuta después de 10 segundos.");
-              const result = await loginUser( values.email, values.password )
-            
-              if(result.code === 'OK'){
-                dispatch(createInfo(result.data?.info));
-                dispatch(createToken(result.data?.token));
-                navigate(AppRoutes.private.root, { replace: true });
-              }else{
-                toast({
-                  description: "❌ " + result.message
-                })
-                
-              }
-
-            // }, 10000) ;
-            
-          
-          } catch (error) {
-            console.log(error)
-          }finally{
-            setIsPending(false)
-            clearTimeout(id);
-          }
-
+        if (result.code === "OK") {
+          dispatch(createInfo(result.data?.info));
+          dispatch(createToken(result.data?.token));
+          navigate(AppRoutes.private.root, { replace: true });
+        } else {
+          toast({
+            description: "❌ " + result.message,
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsPending(false);
+        clearTimeout(id);
+      }
     }
+    // async function onSubmit(values: z.infer<typeof formSchemaLogin>) {
+    //   const id = setTimeout(() => {
+    //     toast({
+    //       variant: "destructive",
+    //       description:
+    //         "La inactividad de esta aplicación puede causar retrasos en la carga de datos. La reactivación puede demorar de 50 segundos o más. Espere por favor.",
+    //     });
+    //   }, 5000);
+
+    //   try {
+    //     setIsPending(true);
+    //     const result = await loginUser(values.email, values.password);
+
+    //     if (result.code === "OK") {
+    //       dispatch(createInfo(result.data?.info));
+    //       dispatch(createToken(result.data?.token));
+    //       navigate(AppRoutes.private.root, { replace: true });
+    //     } else {
+    //       toast({
+    //         description: "❌ " + result.message,
+    //       });
+    //     }
+    //   } catch (error) {
+    //     console.log(error);
+    //   } finally {
+    //     setIsPending(false);
+    //     clearTimeout(id);
+    //   }
+    // }
 
   return (
 
