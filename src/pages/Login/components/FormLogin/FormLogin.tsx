@@ -198,7 +198,7 @@ export function FormLogin() {
           {isPending && (
             <LoaderCircle className="mr-2 h-4 w-4 animate-spin"/>
           )}
-          Entrar
+          {isPending ? "Ingresando":"Ingresar"}
         </Button>
 
         <div className=" flex items-center space-x-4 rounded-md border p-4 w-full">
